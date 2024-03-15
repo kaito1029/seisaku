@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>残高管理</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(45deg, rgb(247, 191, 224), rgb(245, 211, 243), rgb(190, 227, 252), rgb(170, 255, 255));
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            color: #ffffff; /* テキストの色を白に設定 */
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">アカウント情報</h1>
+ 
+        <form id="balanceForm">
+            <!-- ... (省略) ... -->
+
+            <div class="form-group">
+                <h4>パスワード</h4>
+                <label for="password">パスワード:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-block" onclick="submitForm()">送信</button>
+        </form>
+ 
+        <!-- Display entered data -->
+        <div id="displayData" class="mt-4">
+            <h2>入力データ</h2>
+            <p><strong>名前:</strong> <span id="displayedName"></span></p>
+            <p><strong>郵便番号:</strong> <span id="displayedPostalCode"></span></p>
+        </div>
+    </div>
+ 
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+ 
+    <script>
+        // Load saved data on page load
+        window.onload = function () {
+            loadSavedData();
+        };
+
+        function submitForm() {
+            var name = document.getElementById('name').value;
+            var furigana = document.getElementById('furigana').value;
+            var address = document.getElementById('address').value;
+            var postalCode = document.getElementById('postalCode').value;
+            var phoneNumber = document.getElementById('phoneNumber').value;
+            var password = document.getElementById('password').value; // 新しく追加
+
+            // Save data and password to local storage
+            saveData({ name, furigana, address, postalCode, phoneNumber }, password);
+
+            // Display entered data
+            displayData(name, postalCode);
+        }
+
+        function saveData(data, password) {
+            // Save data and password as an object to local storage
+            localStorage.setItem('accountData', JSON.stringify({ data, password }));
+        }
+
+        function loadSavedData() {
+            var savedData = localStorage.getItem('accountData');
+            if (savedData) {
+                savedData = JSON.parse(savedData);
+
+                // Display entered data
+                displayData(savedData.data.name, savedData.data.postalCode);
+            }
+        }
+
+        function displayData(name, postalCode) {
+            document.getElementById('displayedName').innerText = name;
+            document.getElementById('displayedPostalCode').innerText = postalCode;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>入金・出金・残高確認</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f2f2f2; /* 銀行ぽい雰囲気の背景色 */
+            font-family: Arial, sans-serif; /* フォント指定 */
+        }
+
+        .container {
+            background-color: #ffffff; /* コンテンツの背景色 */
+            border-radius: 10px; /* コンテンツの角丸 */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 影の追加 */
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        h1, h2 {
+            color: #333333; /* タイトルの色 */
+        }
+
+        #balance {
+            font-size: 24px; /* 残高のフォントサイズ */
+            font-weight: bold; /* 残高の太字 */
+            color: #007bff; /* 残高の色 */
+        }
+
+        .form-group label {
+            font-weight: bold; /* ラベルの太字 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">入金・出金・残高確認</h1>
+
+        <!-- 入金フォーム -->
+        <div id="depositForm">
+            <h2 class="mb-3">入金</h2>
+            <form>
+                <div class="form-group">
+                    <label for="depositAmount">入金額:</label>
+                    <input type="number" class="form-control" id="depositAmount" required>
+                </div>
+                <button type="button" class="btn btn-success" onclick="deposit()">入金</button>
+            </form>
+        </div>
+
+        <!-- 出金フォーム -->
+        <div id="withdrawalForm" class="mt-4">
+            <h2 class="mb-3">出金</h2>
+            <form>
+                <div class="form-group">
+                    <label for="withdrawalAmount">出金額:</label>
+                    <input type="number" class="form-control" id="withdrawalAmount" required>
+                </div>
+                <button type="button" class="btn btn-danger" onclick="withdraw()">出金</button>
+            </form>
+        </div>
+
+        <!-- 残高表示 -->
+        <div id="balanceDisplay" class="mt-4">
+            <h2 class="mb-3">残高</h2>
+            <p id="balance">0</p>
+        </div>
+        
+        <button type="button" class="btn btn-secondary mt-4" onclick="goBack()" href="/">戻る</button>
+        
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        // 入金処理
+        function deposit() {
+            var depositAmount = parseFloat(document.getElementById('depositAmount').value);
+            var currentBalance = parseFloat(localStorage.getItem('accountBalance')) || 0;
+
+            if (!isNaN(depositAmount) && depositAmount > 0) {
+                var newBalance = currentBalance + depositAmount;
+                localStorage.setItem('accountBalance', newBalance);
+                updateBalanceDisplay(newBalance);
+                alert(depositAmount + '円を入金しました。');
+            } else {
+                alert('有効な入金額を入力してください。');
+            }
+        }
+
+        // 出金処理
+        function withdraw() {
+            var withdrawalAmount = parseFloat(document.getElementById('withdrawalAmount').value);
+            var currentBalance = parseFloat(localStorage.getItem('accountBalance')) || 0;
+
+            if (!isNaN(withdrawalAmount) && withdrawalAmount > 0 && withdrawalAmount <= currentBalance) {
+                var newBalance = currentBalance - withdrawalAmount;
+                localStorage.setItem('accountBalance', newBalance);
+                updateBalanceDisplay(newBalance);
+                alert(withdrawalAmount + '円を出金しました。');
+            } else {
+                alert('有効な出金額を入力してください。');
+            }
+        }
+
+        // 残高表示更新
+        function updateBalanceDisplay(balance) {
+            document.getElementById('balance').innerText = balance.toFixed(2) + '円';
+        }
+
+        // ロード時に残高を表示
+        window.onload = function () {
+            var currentBalance = parseFloat(localStorage.getItem('accountBalance')) || 0;
+            updateBalanceDisplay(currentBalance);
+        };
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>残高管理</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(45deg, rgb(247, 191, 224), rgb(245, 211, 243), rgb(190, 227, 252), rgb(170, 255, 255));
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            color: #ffffff; /* テキストの色を白に設定 */
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- アカウント情報入力フォーム -->
+        <div id="accountForm">
+            <h1 class="text-center mb-4">アカウント情報</h1>
+        
+            <form id="balanceForm">
+                <div class="form-group">
+                    <h4>氏名</h4>
+                    <label for="name">氏名:</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                    
+                    <label for="furigana">ふりがな:</label>
+                    <input type="text" class="form-control" id="furigana" name="furigana" required>
+                </div>
+        
+                <div class="form-group">
+                    <h4>住所</h4>
+                    <label for="address">住所:</label>
+                    <input type="text" class="form-control" id="address" name="address" required>
+                </div>
+        
+                <div class="form-group">
+                    <h4>郵便番号</h4>
+                    <label for="postalCode">〒:</label>
+                    <input type="text" class="form-control" id="postalCode" name="postalCode" required>
+                </div>
+        
+                <div class="form-group">
+                    <h4>電話番号</h4>
+                    <label for="phoneNumber">数字のみ:</label>
+                    <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" required>
+                </div>
+        
+                <button type="button" class="btn btn-primary btn-block" onclick="validateAccount()">次へ</button>
+            </form>
+        </div>
+
+        <!-- パスワード入力フォーム -->
+        <div id="passwordForm" class="hidden">
+            <h1 class="text-center mb-4">パスワード設定</h1>
+
+            <form id="passwordSetupForm">
+                <div class="form-group">
+                    <label for="password">パスワード:</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">パスワード確認:</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                </div>
+
+                <button type="button" class="btn btn-primary btn-block" onclick="savePassword()">保存</button>
+            </form>
+        </div>
+
+        <!-- Display entered data -->
+        <div id="displayData" class="mt-4">
+            <h2>入力データ</h2>
+            <p><strong>名前:</strong> <span id="displayedName"></span></p>
+            <p><strong>郵便番号:</strong> <span id="displayedPostalCode"></span></p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        function validateAccount() {
+            var name = document.getElementById('name').value;
+            var furigana = document.getElementById('furigana').value;
+            var address = document.getElementById('address').value;
+            var postalCode = document.getElementById('postalCode').value;
+            var phoneNumber = document.getElementById('phoneNumber').value;
+
+            if (name && furigana && address && postalCode && phoneNumber) {
+				// All fields are filled
+			}
+			}
+	</script>
+</body>
+
